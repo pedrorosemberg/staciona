@@ -38,7 +38,7 @@ export function Map() {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+      apiKey: 'AIzaSyB1qSLw6QM6LjaafTz7bRLbArMGgts80lY',
       version: 'weekly',
       libraries: ['places']
     });
