@@ -5,40 +5,35 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 100%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 5%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 4 91% 36%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 76% 19%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 221 83% 53%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 4 91% 36%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 53%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 4 91% 36%;
 
     --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
   }
 }
 
@@ -49,38 +44,66 @@
   body {
     @apply bg-background text-foreground font-inter antialiased;
   }
+  
+  /* Accessibility improvements */
+  :focus {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+  
+  :focus:not(:focus-visible) {
+    @apply outline-none;
+  }
+  
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
+
+/* Mobile-first styles */
+.container {
+  @apply px-4 md:px-6 lg:px-8;
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(175, 41, 11, 0.1) 0%, rgba(84, 19, 5, 0.1) 100%);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  @apply bg-white/90 backdrop-blur-md border border-white/30;
 }
 
 .feature-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  @apply transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg;
 }
 
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+.map-container {
+  @apply w-full h-[60vh] md:h-[70vh] rounded-lg overflow-hidden;
 }
 
-.slide-up {
-  animation: slideUp 0.6s ease-out;
+/* Skip to main content - accessibility */
+.skip-to-content {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 
+         focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Improved form controls for touch devices */
+input, select, textarea {
+  @apply min-h-[44px] md:min-h-[36px];
+}
+
+button {
+  @apply min-h-[44px] md:min-h-[36px] cursor-pointer;
+}
+
+/* ARIA support styles */
+[aria-busy="true"] {
+  @apply opacity-70 cursor-wait;
+}
+
+[aria-disabled="true"] {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+[role="alert"] {
+  @apply text-destructive;
 }

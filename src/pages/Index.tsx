@@ -1,10 +1,13 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard } from "lucide-react";
+import { Map } from "@/components/Map";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
+  const [includeInsurance, setIncludeInsurance] = useState(false);
+  const basePrice = 15;
+  const insurancePrice = 5;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
@@ -97,9 +100,11 @@ const Index = () => {
                       onClick={() => setActiveTab(tab)}
                       className={`flex-1 px-6 py-4 text-center font-medium ${
                         activeTab === tab
-                          ? "text-blue-600 border-b-2 border-blue-600"
+                          ? "text-primary border-b-2 border-primary"
                           : "text-gray-500 hover:text-gray-700"
                       }`}
+                      aria-selected={activeTab === tab}
+                      role="tab"
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
                     </button>
@@ -109,13 +114,18 @@ const Index = () => {
               <div className="p-6">
                 {activeTab === "buscar" && (
                   <div className="space-y-4">
+                    <Map />
                     <div className="flex gap-4 mb-6">
                       <input
                         type="text"
                         placeholder="Digite o endereço ou local"
                         className="flex-1 px-4 py-2 border rounded-lg"
+                        aria-label="Endereço para busca"
                       />
-                      <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                      <button 
+                        className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+                        aria-label="Buscar estacionamentos"
+                      >
                         Buscar
                       </button>
                     </div>
@@ -160,7 +170,21 @@ const Index = () => {
                             4.8 (256 avaliações)
                           </div>
                         </div>
-                        <span className="text-green-600 font-medium">R$ 15,00/h</span>
+                        <span className="text-green-600 font-medium">
+                          R$ {includeInsurance ? basePrice + insurancePrice : basePrice},00/h
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
+                        <input
+                          type="checkbox"
+                          id="insurance"
+                          checked={includeInsurance}
+                          onChange={(e) => setIncludeInsurance(e.target.checked)}
+                          className="w-4 h-4 text-primary"
+                        />
+                        <label htmlFor="insurance" className="text-sm text-gray-700">
+                          Adicionar seguro contra danos, furto e roubo (+R$ {insurancePrice},00/h)
+                        </label>
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
