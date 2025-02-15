@@ -5,35 +5,34 @@
 
 @layer base {
   :root {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 100%;
-
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
-
+    --card-foreground: 240 10% 3.9%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
-
+    --popover-foreground: 240 10% 3.9%;
+    
     --primary: 4 91% 36%;
     --primary-foreground: 0 0% 100%;
-
+    
     --secondary: 0 76% 19%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 4 91% 36%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 4 91% 36%;
-
-    --radius: 0.75rem;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 1rem;
   }
 }
 
@@ -42,7 +41,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground antialiased;
   }
   
   /* Accessibility improvements */
@@ -69,7 +68,7 @@
 }
 
 .glass-card {
-  @apply bg-white/90 backdrop-blur-md border border-white/30;
+  @apply bg-white shadow-lg border border-gray-200;
 }
 
 .feature-card {
@@ -77,7 +76,7 @@
 }
 
 .map-container {
-  @apply w-full h-[60vh] md:h-[70vh] rounded-lg overflow-hidden;
+  @apply w-full h-[60vh] md:h-[70vh] rounded-lg overflow-hidden border border-gray-200;
 }
 
 /* Skip to main content - accessibility */
@@ -88,7 +87,7 @@
 
 /* Improved form controls for touch devices */
 input, select, textarea {
-  @apply min-h-[44px] md:min-h-[36px];
+  @apply min-h-[44px] md:min-h-[36px] text-gray-900 bg-white;
 }
 
 button {
