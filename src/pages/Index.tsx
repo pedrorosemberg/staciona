@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard } from "lucide-react";
 import { Map } from "@/components/Map";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Partners } from "@/components/Partners";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
@@ -240,106 +242,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="partners" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Parceiros</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Shield className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Segurança</h3>
-              <p className="text-gray-600">Garantia de segurança para todos os usuários</p>
-            </div>
-            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Star className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Avaliações</h3>
-              <p className="text-gray-600">Comparações de avaliações de estacionamentos</p>
-            </div>
-            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Search className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Busca Inteligente</h3>
-              <p className="text-gray-600">Filtros avançados de pesquisa para encontrar o melhor estacionamento</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="glass-card p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Missão</h3>
-              <p className="text-gray-600">
-                Facilitar a mobilidade urbana, proporcionando aos motoristas uma experiência segura, eficiente e acessível na busca e reserva de estacionamentos.
-              </p>
-            </div>
-            <div className="glass-card p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Visão</h3>
-              <p className="text-gray-600">
-                Ser a plataforma líder na digitalização e otimização do setor de estacionamentos, tornando a experiência de estacionamento tão simples quanto um toque na tela.
-              </p>
-            </div>
-            <div className="glass-card p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">Valores</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li className="flex items-center gap-2">
-                  Inovação Contínua
-                </li>
-                <li className="flex items-center gap-2">
-                  Precisão e Transparência
-                </li>
-                <li className="flex items-center gap-2">
-                  Eficiência e Simplicidade
-                </li>
-                <li className="flex items-center gap-2">
-                  Parcerias Estratégicas
-                </li>
-                <li className="flex items-center gap-2">
-                  Foco no Cliente
-                </li>
-                <li className="flex items-center gap-2">
-                  Sustentabilidade
-                </li>
-                <li className="flex items-center gap-2">
-                  Segurança e Confiabilidade
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-8">Entre em Contato</h2>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Nome"
-                className="w-full px-4 py-3 border rounded-lg"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full px-4 py-3 border rounded-lg"
-              />
-              <textarea
-                placeholder="Mensagem"
-                className="w-full px-4 py-3 border rounded-lg resize-none h-32"
-              />
-              <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Enviar Mensagem
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Partners />
 
       <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-4">
