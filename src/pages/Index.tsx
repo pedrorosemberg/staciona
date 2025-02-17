@@ -11,19 +11,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-      {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <img src="/Group 886.png" alt="Staciona Logo" className="h-8" />
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">Recursos</a>
-            <a href="#about" className="text-gray-600 hover:text-blue-600 transition-colors">Sobre</a>
-            <a href="#contact" className="text-gray-600 hover:text-blue-600 transition-colors">Contato</a>
+            <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Recursos</a>
+            <a href="#about" className="text-gray-600 hover:text-primary transition-colors">Sobre</a>
+            <a href="#partners" className="text-gray-600 hover:text-primary transition-colors">Parceiros</a>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="pt-32 pb-20 hero-gradient">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -56,7 +54,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Recursos Principais</h2>
@@ -86,7 +83,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Demo Section */}
       <section id="demo" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Como Funciona</h2>
@@ -244,7 +240,35 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Mission, Vision, Values Section */}
+      <section id="partners" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Parceiros</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Segurança</h3>
+              <p className="text-gray-600">Garantia de segurança para todos os usuários</p>
+            </div>
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Star className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Avaliações</h3>
+              <p className="text-gray-600">Comparações de avaliações de estacionamentos</p>
+            </div>
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Search className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Busca Inteligente</h3>
+              <p className="text-gray-600">Filtros avançados de pesquisa para encontrar o melhor estacionamento</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="about" className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
@@ -290,7 +314,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-xl mx-auto text-center">
@@ -318,7 +341,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
@@ -329,39 +351,30 @@ const Index = () => {
               </p>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Links Rápidos</h4>
+              <h4 className="text-white font-semibold mb-4">Desenvolvido por</h4>
               <ul className="space-y-2">
-                <li>
-                  <a href="#features" className="hover:text-white transition-colors">
-                    Recursos
-                  </a>
-                </li>
-                <li>
-                  <a href="#about" className="hover:text-white transition-colors">
-                    Sobre
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" className="hover:text-white transition-colors">
-                    Contato
-                  </a>
-                </li>
+                <li>Pedro Rosemberg</li>
+                <li>Ana Carolina</li>
+                <li>José</li>
+                <li>Kauan</li>
+                <li>Thales</li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Contato</h4>
               <ul className="space-y-2">
                 <li>contato@staciona.com.br</li>
-                <li>São Paulo, SP</li>
+                <li>+55 (11) 93473-8412</li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-sm text-center">
-            <p>&copy; 2024 Staciona. Todos os direitos reservados.</p>
-            <p className="mt-2">Desenvolvido por Pedro Rosemberg</p>
+            <p>&copy; {new Date().getFullYear()} Staciona. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
+
+      <WhatsAppButton />
     </div>
   );
 };
