@@ -4,47 +4,47 @@ import { motion } from 'framer-motion';
 const partners = [
   {
     name: "Metadax Tecnologia LTDA",
-    logo: "/placeholder.svg", // Substitua pelo caminho real da logo quando disponível
+    logo: "/partners/metadax.png", // Substitua pelo caminho real da logo quando disponível
     description: "Soluções tecnológicas inovadoras"
   },
   {
     name: "Proz Educação",
-    logo: "/placeholder.svg",
+    logo: "/partners/prozed.png",
     description: "Educação profissionalizante de qualidade"
   },
   {
     name: "Prefeitura de Belo Horizonte",
-    logo: "/placeholder.svg",
+    logo: "/partners/pbh.png",
     description: "Administração municipal de BH"
   },
   {
     name: "PRODABEL",
-    logo: "/placeholder.svg",
+    logo: "/partners/prodabel.png",
     description: "Empresa de Informática e Informação de BH"
   },
   {
     name: "Prefeitura da Cidade de São Paulo",
-    logo: "/placeholder.svg",
+    logo: "/partners/pmsp.png",
     description: "Administração municipal de SP"
   },
   {
     name: "SPTRANS",
-    logo: "/placeholder.svg",
+    logo: "/partners/sptrans.png",
     description: "Transporte público de São Paulo"
   },
   {
     name: "Prefeitura de Florianópolis",
-    logo: "/placeholder.svg",
+    logo: "/partners/floripa.png",
     description: "Administração municipal de Florianópolis"
   },
   {
     name: "Prefeitura do Rio de Janeiro",
-    logo: "/placeholder.svg",
+    logo: "/partners/rio.png",
     description: "Administração municipal do RJ"
   },
   {
     name: "Shopping Boulevard",
-    logo: "/placeholder.svg",
+    logo: "/partners/boulevard.jpg",
     description: "Centro comercial de referência"
   }
 ];
