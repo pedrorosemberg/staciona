@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard } from "lucide-react";
@@ -15,7 +16,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <img src="/Group 886.png" alt="Staciona Logo" className="h-8" />
+          <img src="Group 886.png" alt="Staciona Logo" className="h-8" />
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Recursos</a>
             <a href="#about" className="text-gray-600 hover:text-primary transition-colors">Sobre</a>
@@ -248,7 +249,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <img src="/Group 886.png" alt="Staciona Logo" className="h-8 mb-4" />
+              <img src="Group 886.png" alt="Staciona Logo" className="h-8 mb-4" />
               <p className="text-sm">
                 Simplificando sua busca por estacionamento com tecnologia e inovação.
               </p>
