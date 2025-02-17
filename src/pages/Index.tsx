@@ -1,16 +1,20 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard } from "lucide-react";
 import { Map } from "@/components/Map";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Partners } from "@/components/Partners";
+import { StarRating } from "@/components/StarRating";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
   const [includeInsurance, setIncludeInsurance] = useState(false);
   const basePrice = 15;
   const insurancePrice = 5;
+
+  const handleRatingChange = (rating: number) => {
+    console.log('Nova avaliação:', rating);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
@@ -111,6 +115,25 @@ const Index = () => {
                 </div>
               </div>
               <div className="p-6">
+                {activeTab === "avaliar" && (
+                  <div className="space-y-6">
+                    <div className="text-center mb-8">
+                      <h4 className="font-semibold mb-2">Como foi sua experiência?</h4>
+                      <div className="flex justify-center gap-2">
+                        <StarRating onRatingChange={handleRatingChange} />
+                      </div>
+                    </div>
+                    <div>
+                      <textarea
+                        placeholder="Conte-nos mais sobre sua experiência (opcional)"
+                        className="w-full px-4 py-3 border rounded-lg resize-none h-32"
+                      />
+                    </div>
+                    <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                      Enviar Avaliação
+                    </button>
+                  </div>
+                )}
                 {activeTab === "buscar" && (
                   <div className="space-y-4">
                     <Map />
@@ -208,32 +231,6 @@ const Index = () => {
                     </div>
                     <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                       Confirmar Reserva
-                    </button>
-                  </div>
-                )}
-                {activeTab === "avaliar" && (
-                  <div className="space-y-6">
-                    <div className="text-center mb-8">
-                      <h4 className="font-semibold mb-2">Como foi sua experiência?</h4>
-                      <div className="flex justify-center gap-2">
-                        {[1, 2, 3, 4, 5].map((rating) => (
-                          <button
-                            key={rating}
-                            className="p-2 hover:text-yellow-400 transition-colors"
-                          >
-                            <Star className="w-6 h-6" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <textarea
-                        placeholder="Conte-nos mais sobre sua experiência (opcional)"
-                        className="w-full px-4 py-3 border rounded-lg resize-none h-32"
-                      />
-                    </div>
-                    <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Enviar Avaliação
                     </button>
                   </div>
                 )}

@@ -21,20 +21,27 @@ export function StarRating({ onRatingChange, readOnly = false, initialRating = 0
     }
   };
 
+  const shouldFill = (starPosition: number) => {
+    if (hover > 0) {
+      return starPosition <= hover;
+    }
+    return starPosition <= rating;
+  };
+
   return (
     <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
+      {[1, 2, 3, 4, 5].map((starPosition) => (
         <button
-          key={star}
+          key={starPosition}
           type="button"
           disabled={readOnly}
-          onClick={() => handleRating(star)}
-          onMouseEnter={() => !readOnly && setHover(star)}
+          onClick={() => handleRating(starPosition)}
+          onMouseEnter={() => !readOnly && setHover(starPosition)}
           onMouseLeave={() => !readOnly && setHover(0)}
           className={`p-1 transition-colors ${
             readOnly ? 'cursor-default' : 'cursor-pointer hover:text-yellow-400'
           } ${
-            (hover || rating) >= star ? 'text-yellow-400' : 'text-gray-300'
+            shouldFill(starPosition) ? 'text-yellow-400' : 'text-gray-300'
           }`}
         >
           <Star className="w-6 h-6" />
