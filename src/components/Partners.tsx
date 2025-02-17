@@ -2,13 +2,15 @@
 import { motion } from 'framer-motion';
 
 const partners = [
-  "Metadax Tecnologia e Serviços",
+  "Metadax Tecnologia LTDA",
   "Proz Educação",
-  "Prefeitura de Belo Horizonte/PRODABEL",
-  "Prefeitura da Cidade de São Paulo/SPTRANS",
-  "Prefeitura da cidade de Florianópolis",
-  "Prefeitura da cidade do Rio de Janeiro",
-  "Shopping Boulevard de Belo Horizonte/MG"
+  "Prefeitura de Belo Horizonte",
+  "PRODABEL",
+  "Prefeitura da Cidade de São Paulo",
+  "SPTRANS",
+  "Prefeitura de Florianópolis",
+  "Prefeitura do Rio de Janeiro",
+  "Shopping Boulevard"
 ];
 
 export function Partners() {
