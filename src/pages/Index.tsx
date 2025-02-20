@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard } from "lucide-react";
+import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard, Bike, ShieldCheck, Warehouse, HousePlug, Moon, Store } from "lucide-react";
 import { Map } from "@/components/Map";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Partners } from "@/components/Partners";
@@ -65,26 +65,77 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Recursos Principais</h2>
           <div className="grid md:grid-cols-3 gap-8">
+            {/* Nova feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <ShieldCheck className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Segurança em primeiro lugar</h3>
+              <p className="text-gray-600">Estacione seu veículo com seguro por danos, roubo e furto</p>
+            </div>
+            {/* Nova feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Bike className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Estacionamento para motos</h3>
+              <p className="text-gray-600">Encontre estacionamentos seguros para sua moto</p>
+            </div>
+            {/* Nova Feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Warehouse className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Estacionamentos cobertos</h3>
+              <p className="text-gray-600">Encontre vagas cobertas e privativas para seu veículo</p>
+            </div>
+            {/* Nova Feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Search className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Busca Inteligente</h3>
+              <h3 className="text-xl font-semibold mb-3">Busca inteligente</h3>
               <p className="text-gray-600">Encontre estacionamentos próximos com filtros avançados de pesquisa</p>
             </div>
+            {/* Nova Feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Calendar className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Reserva Antecipada</h3>
+              <h3 className="text-xl font-semibold mb-3">Reserva antecipada</h3>
               <p className="text-gray-600">Garanta sua vaga com antecedência e evite surpresas</p>
             </div>
+            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <CreditCard className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Preços Exclusivos</h3>
+              <h3 className="text-xl font-semibold mb-3">Preços exclusivos</h3>
               <p className="text-gray-600">Aproveite descontos especiais e promoções para usuários</p>
+            </div>
+            {/* Nova feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <HousePlug className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Charge point</h3>
+              <p className="text-gray-600">Estacione seu veículo elétrico em um de nossos Charge Points</p>
+            </div>
+            {/* Nova feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Moon className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Estacionamento noturno</h3>
+              <p className="text-gray-600">Encontre os locais mais seguros a noite (disponível até 22h00)</p>
+            </div>
+            {/* Nova feature */}
+            <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Store className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Parceiros</h3>
+              <p className="text-gray-600">Estacione em lojas de pareiros, compre e receba descontos exclusivos</p>
             </div>
           </div>
         </div>
