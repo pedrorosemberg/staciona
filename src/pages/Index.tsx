@@ -74,7 +74,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <img src="Group 886.png" alt="Staciona Logo" className="h-6" />
+          <div className="text-xl font-bold text-primary">Staciona</div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Recursos</a>
             <a href="#about" className="text-gray-600 hover:text-primary transition-colors">Sobre</a>
@@ -297,7 +297,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <img src="Group 889.png" alt="Staciona Logo" className="h-4 mb-4" />
+              <div className="text-xl font-bold text-white mb-4">Staciona</div>
               <p className="text-sm">
                 Simplificando sua busca por estacionamento com tecnologia e inovação.
               </p>
