@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -9,7 +8,7 @@ import {
   Search, 
   Calendar, 
   CreditCard,
-  ChargingPile,
+  Battery,
   Moon,
   ShoppingBag,
   MapPin,
@@ -164,7 +163,7 @@ const Index = () => {
             </div>
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <ChargingPile className="w-6 h-6 text-blue-600" />
+                <Battery className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Charge point</h3>
               <p className="text-gray-600">Estacione seu veículo elétrico em um de nossos Charge Points</p>
