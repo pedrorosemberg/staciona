@@ -48,7 +48,7 @@ export function Map() {
 
         const mapInstance = new Map(mapRef.current, {
           center: userLocation || defaultCenter,
-          zoom: 15,
+          zoom: 14, // Diminuindo o zoom para mostrar mais pontos
           mapId: 'staciona_map'
         });
 
