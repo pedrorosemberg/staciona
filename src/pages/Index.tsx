@@ -1,20 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Shield, Star, Search, Calendar, CreditCard, Bike, ShieldCheck, Warehouse, HousePlug, Moon, Store } from "lucide-react";
+import { toast } from "sonner";
+import { MapPin, Clock, Shield, Star, Search, Calendar } from "lucide-react";
 import { Map } from "@/components/Map";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Partners } from "@/components/Partners";
 import { StarRating } from "@/components/StarRating";
+import { useReservation } from "@/hooks/useReservation";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
-  const [includeInsurance, setIncludeInsurance] = useState(false);
-  const basePrice = 15;
-  const insurancePrice = 5;
+  const { reservationInfo, setInsurance } = useReservation();
 
-  const handleRatingChange = (rating: number) => {
-    console.log('Nova avaliação:', rating);
+  const handleTabChange = (tab: string) => {
+    if (tab === "reservar" && !reservationInfo.spot) {
+      toast.error("Por favor, selecione um estacionamento primeiro!");
+      return;
+    }
+    if (tab === "avaliar" && (!reservationInfo.date || !reservationInfo.time)) {
+      toast.error("Por favor, complete sua reserva primeiro!");
+      return;
+    }
+    setActiveTab(tab);
   };
+
+  const handleReservation = () => {
+    if (!reservationInfo.date || !reservationInfo.time) {
+      toast.error("Por favor, preencha todos os campos!");
+      return;
+    }
+
+    toast.success("Reserva confirmada! Em breve você receberá os dados da reserva.");
+    
+    setTimeout(() => {
+      setActiveTab("avaliar");
+    }, 15000);
+  };
+
+  const handleRatingSubmit = (rating: number) => {
+    if (rating > 0) {
+      toast.success("Agradecemos sua avaliação! Por este gesto, você recebeu um cupom de 30%OFF para você e um amigo! Use AVALIA30 ao realizar o pagamento.");
+    }
+  };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          toast.success("Localização obtida com sucesso!");
+        },
+        () => {
+          toast.error("Por favor, permita o acesso à sua localização para uma melhor experiência.");
+        }
+      );
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
@@ -65,7 +105,6 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Recursos Principais</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <ShieldCheck className="w-6 h-6 text-blue-600" />
@@ -73,7 +112,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Segurança em primeiro lugar</h3>
               <p className="text-gray-600">Estacione seu veículo com seguro por danos, roubo e furto</p>
             </div>
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Bike className="w-6 h-6 text-blue-600" />
@@ -81,7 +119,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Estacionamento para motos</h3>
               <p className="text-gray-600">Encontre estacionamentos seguros para sua moto</p>
             </div>
-            {/* Nova Feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Warehouse className="w-6 h-6 text-blue-600" />
@@ -89,7 +126,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Estacionamentos cobertos</h3>
               <p className="text-gray-600">Encontre vagas cobertas e privativas para seu veículo</p>
             </div>
-            {/* Nova Feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Search className="w-6 h-6 text-blue-600" />
@@ -97,7 +133,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Busca inteligente</h3>
               <p className="text-gray-600">Encontre estacionamentos próximos com filtros avançados de pesquisa</p>
             </div>
-            {/* Nova Feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Calendar className="w-6 h-6 text-blue-600" />
@@ -105,7 +140,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Reserva antecipada</h3>
               <p className="text-gray-600">Garanta sua vaga com antecedência e evite surpresas</p>
             </div>
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <CreditCard className="w-6 h-6 text-blue-600" />
@@ -113,7 +147,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Preços exclusivos</h3>
               <p className="text-gray-600">Aproveite descontos especiais e promoções para usuários</p>
             </div>
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <HousePlug className="w-6 h-6 text-blue-600" />
@@ -121,7 +154,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Charge point</h3>
               <p className="text-gray-600">Estacione seu veículo elétrico em um de nossos Charge Points</p>
             </div>
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Moon className="w-6 h-6 text-blue-600" />
@@ -129,7 +161,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-3">Estacionamento noturno</h3>
               <p className="text-gray-600">Encontre os locais mais seguros a noite (disponível até 22h00)</p>
             </div>
-            {/* Nova feature */}
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Store className="w-6 h-6 text-blue-600" />
@@ -151,7 +182,7 @@ const Index = () => {
                   {["buscar", "reservar", "avaliar"].map((tab) => (
                     <button
                       key={tab}
-                      onClick={() => setActiveTab(tab)}
+                      onClick={() => handleTabChange(tab)}
                       className={`flex-1 px-6 py-4 text-center font-medium ${
                         activeTab === tab
                           ? "text-primary border-b-2 border-primary"
@@ -166,122 +197,77 @@ const Index = () => {
                 </div>
               </div>
               <div className="p-6">
-                {activeTab === "avaliar" && (
+                {activeTab === "buscar" && (
+                  <div className="space-y-4">
+                    <Map onSpotSelect={(spot) => {
+                      setSpot(spot);
+                      toast.success("Estacionamento selecionado!");
+                    }} />
+                  </div>
+                )}
+                
+                {activeTab === "reservar" && reservationInfo.spot && (
                   <div className="space-y-6">
-                    <div className="text-center mb-8">
-                      <h4 className="font-semibold mb-2">Como foi sua experiência?</h4>
-                      <div className="flex justify-center gap-2">
-                        <StarRating onRatingChange={handleRatingChange} />
+                    <div className="border rounded-lg p-4">
+                      <h4 className="font-semibold mb-2">{reservationInfo.spot.title}</h4>
+                      <p className="text-gray-600">{reservationInfo.spot.address}</p>
+                      <div className="mt-4">
+                        <div className="grid grid-cols-2 gap-4 mb-4">
+                          <div>
+                            <label className="block text-sm font-medium mb-1">Data</label>
+                            <input
+                              type="date"
+                              className="w-full p-2 border rounded"
+                              onChange={(e) => setDate(new Date(e.target.value))}
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1">Horário</label>
+                            <input
+                              type="time"
+                              className="w-full p-2 border rounded"
+                              onChange={(e) => setTime(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
+                          <input
+                            type="checkbox"
+                            id="insurance"
+                            checked={reservationInfo.includeInsurance}
+                            onChange={(e) => setInsurance(e.target.checked)}
+                            className="w-4 h-4"
+                          />
+                          <label htmlFor="insurance" className="text-sm">
+                            Adicionar seguro contra danos (+R$ 5,00/h)
+                          </label>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <textarea
-                        placeholder="Conte-nos mais sobre sua experiência (opcional)"
-                        className="w-full px-4 py-3 border rounded-lg resize-none h-32"
-                      />
-                    </div>
-                    <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Enviar Avaliação
+                    <button
+                      onClick={handleReservation}
+                      className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      Confirmar Reserva
                     </button>
                   </div>
                 )}
-                {activeTab === "buscar" && (
-                  <div className="space-y-4">
-                    <Map />
-                    <div className="flex gap-4 mb-6">
-                      <input
-                        type="text"
-                        placeholder="Digite o endereço ou local"
-                        className="flex-1 px-4 py-2 border rounded-lg"
-                        aria-label="Endereço para busca"
-                      />
-                      <button 
-                        className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
-                        aria-label="Buscar estacionamentos"
-                      >
-                        Buscar
-                      </button>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="p-4 border rounded-lg hover:border-blue-300 transition-colors">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <h4 className="font-semibold">Estacionamento {i}</h4>
-                              <p className="text-sm text-gray-500">Rua Example, {i}00</p>
-                            </div>
-                            <span className="text-green-600 font-medium">R$ {15 + i},00/h</span>
-                          </div>
-                          <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              {0.1 * i}km
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
-                              24h
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Star className="w-4 h-4" />
-                              {4.0 + i/10}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {activeTab === "reservar" && (
+
+                {activeTab === "avaliar" && (
                   <div className="space-y-6">
-                    <div className="border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">Estacionamento Selecionado</h4>
-                      <div className="flex justify-between items-center mb-4">
-                        <div>
-                          <p className="text-gray-600">Rua Example, 100</p>
-                          <div className="flex items-center gap-2 text-sm text-gray-500">
-                            <Star className="w-4 h-4" />
-                            4.8 (256 avaliações)
-                          </div>
-                        </div>
-                        <span className="text-green-600 font-medium">
-                          R$ {includeInsurance ? basePrice + insurancePrice : basePrice},00/h
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
-                        <input
-                          type="checkbox"
-                          id="insurance"
-                          checked={includeInsurance}
-                          onChange={(e) => setIncludeInsurance(e.target.checked)}
-                          className="w-4 h-4 text-primary"
-                        />
-                        <label htmlFor="insurance" className="text-sm text-gray-700">
-                          Adicionar seguro contra danos, furto e roubo (+R$ {insurancePrice},00/h)
-                        </label>
-                      </div>
+                    <div className="text-center">
+                      <h4 className="font-semibold mb-4">Como foi sua experiência?</h4>
+                      <StarRating onRatingChange={handleRatingSubmit} />
                     </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Data de Entrada
-                        </label>
-                        <input
-                          type="date"
-                          className="w-full px-4 py-2 border rounded-lg"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Horário
-                        </label>
-                        <input
-                          type="time"
-                          className="w-full px-4 py-2 border rounded-lg"
-                        />
-                      </div>
-                    </div>
-                    <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Confirmar Reserva
+                    <textarea
+                      placeholder="Conte-nos mais sobre sua experiência (opcional)"
+                      className="w-full p-4 border rounded-lg h-32 resize-none"
+                    />
+                    <button
+                      onClick={() => handleRatingSubmit(5)}
+                      className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      Enviar Avaliação
                     </button>
                   </div>
                 )}
