@@ -1,16 +1,31 @@
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { MapPin, Clock, Shield, Star, Search, Calendar } from "lucide-react";
+import { 
+  Shield, 
+  Bike, 
+  Building2, 
+  Search, 
+  Calendar, 
+  CreditCard,
+  ChargingPile,
+  Moon,
+  ShoppingBag,
+  MapPin,
+  Clock,
+  Star
+} from "lucide-react";
 import { Map } from "@/components/Map";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Partners } from "@/components/Partners";
 import { StarRating } from "@/components/StarRating";
 import { useReservation } from "@/hooks/useReservation";
+import { ParkingSpot } from "@/types/map";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
-  const { reservationInfo, setInsurance } = useReservation();
+  const { reservationInfo, setSpot, setDate, setTime, setInsurance } = useReservation();
 
   const handleTabChange = (tab: string) => {
     if (tab === "reservar" && !reservationInfo.spot) {
@@ -107,7 +122,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <ShieldCheck className="w-6 h-6 text-blue-600" />
+                <Shield className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Segurança em primeiro lugar</h3>
               <p className="text-gray-600">Estacione seu veículo com seguro por danos, roubo e furto</p>
@@ -121,7 +136,7 @@ const Index = () => {
             </div>
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Warehouse className="w-6 h-6 text-blue-600" />
+                <Building2 className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Estacionamentos cobertos</h3>
               <p className="text-gray-600">Encontre vagas cobertas e privativas para seu veículo</p>
@@ -149,7 +164,7 @@ const Index = () => {
             </div>
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <HousePlug className="w-6 h-6 text-blue-600" />
+                <ChargingPile className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Charge point</h3>
               <p className="text-gray-600">Estacione seu veículo elétrico em um de nossos Charge Points</p>
@@ -163,7 +178,7 @@ const Index = () => {
             </div>
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Store className="w-6 h-6 text-blue-600" />
+                <ShoppingBag className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Parceiros</h3>
               <p className="text-gray-600">Estacione em lojas de pareiros, compre e receba descontos exclusivos</p>

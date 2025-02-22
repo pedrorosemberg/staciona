@@ -1,12 +1,16 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { MOCK_PARKING_SPOTS } from '../constants/parkingSpots';
 import { useMapInitialization } from '../hooks/useMapInitialization';
 import { SearchInput } from './map/SearchInput';
 import { createParkingMarker } from './map/ParkingMarker';
+import { ParkingSpot } from '../types/map';
 
-export function Map() {
+interface MapProps {
+  onSpotSelect: (spot: ParkingSpot) => void;
+}
+
+export function Map({ onSpotSelect }: MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -93,6 +97,10 @@ export function Map() {
                     <p class="text-sm ${spot.available ? 'text-green-600' : 'text-red-600'}">
                       ${spot.available ? 'Disponível' : 'Ocupado'}
                     </p>
+                    <button onclick="window.selectSpot(${JSON.stringify(spot)})" 
+                            class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
+                      Selecionar
+                    </button>
                   </div>
                 `
               });
@@ -103,6 +111,9 @@ export function Map() {
                 onClick: () => {
                   infoWindowsRef.current.forEach(window => window.close());
                   infoWindow.open(mapInstance, marker);
+                  if (spot.available) {
+                    onSpotSelect(spot);
+                  }
                 }
               });
 
@@ -119,7 +130,7 @@ export function Map() {
     };
 
     initializeMap();
-  }, [userLocation, mapLoaded, initializeLoader]);
+  }, [userLocation, mapLoaded, initializeLoader, onSpotSelect]);
 
   return (
     <div className="space-y-4">

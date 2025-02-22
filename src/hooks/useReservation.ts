@@ -1,6 +1,6 @@
 
 import { create } from 'zustand';
-import { ReservationInfo } from '../types/map';
+import { ReservationInfo, ParkingSpot } from '../types/map';
 
 interface ReservationStore {
   reservationInfo: ReservationInfo;
