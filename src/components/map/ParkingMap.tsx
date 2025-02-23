@@ -37,8 +37,9 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
         className="h-full w-full"
-        defaultCenter={defaultPosition}
-        defaultZoom={13}
+        center={defaultPosition}
+        zoom={13}
+        scrollWheelZoom={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {spots.map((spot, index) => {
@@ -48,7 +49,10 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
             <Marker
               key={index}
               position={position}
-              onClick={() => onSpotSelect(spot)}
+              icon={currentIcon}
+              eventHandlers={{
+                click: () => onSpotSelect(spot)
+              }}
             >
               <Popup>
                 <div className="p-2">
