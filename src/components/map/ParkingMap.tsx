@@ -1,6 +1,6 @@
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, MapContainerProps } from 'react-leaflet';
+import type { LatLngExpression, Icon as LeafletIcon } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
@@ -13,7 +13,7 @@ interface ParkingMapProps {
 }
 
 // Definindo os ícones dos marcadores corretamente
-const normalIcon = new L.Icon({
+const normalIcon: LeafletIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -22,7 +22,7 @@ const normalIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-const selectedIcon = new L.Icon({
+const selectedIcon: LeafletIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -34,16 +34,18 @@ const selectedIcon = new L.Icon({
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
 
+  // Configuração do MapContainer com as props corretas
+  const mapProps: MapContainerProps = {
+    center: defaultPosition,
+    zoom: 13,
+    style: { height: '100%', width: '100%' }
+  };
+
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
-      <MapContainer 
-        center={defaultPosition}
-        zoom={13}
-        style={{ height: '100%', width: '100%' }}
-      >
+      <MapContainer {...mapProps}>
         <TileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
