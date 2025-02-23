@@ -44,9 +44,9 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
         className="h-full w-full"
-        scrollWheelZoom={false}
+        center={defaultPosition}
+        zoom={13}
       >
-        <MapInitializer center={defaultPosition} zoom={13} />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
