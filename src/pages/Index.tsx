@@ -24,7 +24,7 @@ import { ParkingSpot } from "@/types/map";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
-  const { reservationInfo, setSpot, setDate, setTime, setInsurance } = useReservation();
+  const { reservationInfo, setSpot, setDate, setTime, setInsurance, setEndDate, setEndTime } = useReservation();
 
   const handleTabChange = (tab: string) => {
     if (tab === "reservar" && !reservationInfo.spot) {
@@ -177,7 +177,7 @@ const Index = () => {
             </div>
             <div className="feature-card p-6 rounded-xl bg-white shadow-lg">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <ShoppingBag className="w-6 h-6 text-blue-600" />
+                <ShoppingBag className="w-6 h-12 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Parceiros</h3>
               <p className="text-gray-600">Estacione em lojas de pareiros, compre e receba descontos exclusivos</p>
@@ -226,22 +226,48 @@ const Index = () => {
                       <h4 className="font-semibold mb-2">{reservationInfo.spot.title}</h4>
                       <p className="text-gray-600">{reservationInfo.spot.address}</p>
                       <div className="mt-4">
-                        <div className="grid grid-cols-2 gap-4 mb-4">
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Data</label>
-                            <input
-                              type="date"
-                              className="w-full p-2 border rounded"
-                              onChange={(e) => setDate(new Date(e.target.value))}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium mb-1">Horário</label>
-                            <input
-                              type="time"
-                              className="w-full p-2 border rounded"
-                              onChange={(e) => setTime(e.target.value)}
-                            />
+                        <div className="grid grid-cols-1 gap-4 mb-4">
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium mb-1">Check-in</label>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                  <input
+                                    type="date"
+                                    className="w-full p-2 border rounded"
+                                    onChange={(e) => setDate(new Date(e.target.value))}
+                                    min={new Date().toISOString().split('T')[0]}
+                                  />
+                                </div>
+                                <div>
+                                  <input
+                                    type="time"
+                                    className="w-full p-2 border rounded"
+                                    onChange={(e) => setTime(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium mb-1">Check-out</label>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                  <input
+                                    type="date"
+                                    className="w-full p-2 border rounded"
+                                    onChange={(e) => setEndDate(new Date(e.target.value))}
+                                    min={reservationInfo.date ? reservationInfo.date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
+                                  />
+                                </div>
+                                <div>
+                                  <input
+                                    type="time"
+                                    className="w-full p-2 border rounded"
+                                    onChange={(e) => setEndTime(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
