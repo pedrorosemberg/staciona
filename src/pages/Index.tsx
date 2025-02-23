@@ -22,6 +22,34 @@ import { StarRating } from "@/components/StarRating";
 import { useReservation } from "@/hooks/useReservation";
 import { ParkingSpot } from "@/types/map";
 
+interface ReservationInfo {
+  spot: ParkingSpot | null;
+  date: Date | null;
+  time: string | null;
+  endDate: Date | null;
+  endTime: string | null;
+  includeInsurance: boolean;
+}
+
+const calculateTotalHours = (startDate: Date, startTime: string, endDate: Date, endTime: string): number => {
+  const start = new Date(startDate);
+  const [startHours, startMinutes] = startTime.split(':');
+  start.setHours(parseInt(startHours), parseInt(startMinutes));
+
+  const end = new Date(endDate);
+  const [endHours, endMinutes] = endTime.split(':');
+  end.setHours(parseInt(endHours), parseInt(endMinutes));
+
+  const diffInMs = end.getTime() - start.getTime();
+  const diffInHours = diffInMs / (1000 * 60 * 60);
+  return Math.max(0, Math.ceil(diffInHours));
+};
+
+const calculateInsuranceCost = (hours: number): number => {
+  // Base insurance cost between R$5 and R$20 per hour
+  return Math.min(20, Math.max(5, Math.ceil(hours * 5)));
+};
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
   const { reservationInfo, setSpot, setDate, setTime, setInsurance, setEndDate, setEndTime } = useReservation();
@@ -55,6 +83,30 @@ const Index = () => {
     if (rating > 0) {
       toast.success("Agradecemos sua avaliação! Por este gesto, você recebeu um cupom de 30%OFF para você e um amigo! Use AVALIA30 ao realizar o pagamento.");
     }
+  };
+
+  const calculateTotalCost = () => {
+    if (!reservationInfo.spot || !reservationInfo.date || !reservationInfo.time || 
+        !reservationInfo.endDate || !reservationInfo.endTime) {
+      return null;
+    }
+
+    const totalHours = calculateTotalHours(
+      reservationInfo.date,
+      reservationInfo.time,
+      reservationInfo.endDate,
+      reservationInfo.endTime
+    );
+
+    const parkingCost = totalHours * reservationInfo.spot.price;
+    const insuranceCost = reservationInfo.includeInsurance ? calculateInsuranceCost(totalHours) * totalHours : 0;
+
+    return {
+      hours: totalHours,
+      parkingCost,
+      insuranceCost,
+      total: parkingCost + insuranceCost
+    };
   };
 
   useEffect(() => {
@@ -281,9 +333,40 @@ const Index = () => {
                             className="w-4 h-4"
                           />
                           <label htmlFor="insurance" className="text-sm">
-                            Adicionar seguro contra danos (+R$ 5,00/h)
+                            Adicionar seguro contra furto, roubo e danos enquanto estiver estacionado? (+R$5 a R$20/h)
                           </label>
                         </div>
+                        {reservationInfo.date && reservationInfo.time && reservationInfo.endDate && reservationInfo.endTime && (
+                          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                            <h5 className="font-semibold mb-2">Resumo do Valor</h5>
+                            {(() => {
+                              const costs = calculateTotalCost();
+                              if (!costs) return null;
+                              return (
+                                <div className="space-y-2">
+                                  <div className="flex justify-between text-sm">
+                                    <span>Tempo total:</span>
+                                    <span>{costs.hours} hora(s)</span>
+                                  </div>
+                                  <div className="flex justify-between text-sm">
+                                    <span>Valor do estacionamento:</span>
+                                    <span>R$ {costs.parkingCost.toFixed(2)}</span>
+                                  </div>
+                                  {reservationInfo.includeInsurance && (
+                                    <div className="flex justify-between text-sm">
+                                      <span>Valor do seguro:</span>
+                                      <span>R$ {costs.insuranceCost.toFixed(2)}</span>
+                                    </div>
+                                  )}
+                                  <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                                    <span>Valor Total:</span>
+                                    <span>R$ {costs.total.toFixed(2)}</span>
+                                  </div>
+                                </div>
+                              );
+                            })()}
+                          </div>
+                        )}
                       </div>
                     </div>
                     <button
