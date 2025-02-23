@@ -1,6 +1,6 @@
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LatLngExpression, Icon } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { LatLngExpression, Icon, Map as LeafletMap } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
@@ -30,6 +30,13 @@ const selectedIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+// Componente para inicializar o mapa com as configurações iniciais
+function MapInitializer({ center, zoom }: { center: LatLngExpression; zoom: number }) {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+}
+
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
 
@@ -37,19 +44,17 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
         className="h-full w-full"
-        center={defaultPosition}
-        zoom={13}
         scrollWheelZoom={false}
       >
+        <MapInitializer center={defaultPosition} zoom={13} />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
-          const currentIcon = selectedSpot?.title === spot.title ? selectedIcon : normalIcon;
+          const markerIcon = selectedSpot?.title === spot.title ? selectedIcon : normalIcon;
           return (
             <Marker
               key={index}
               position={position}
-              icon={currentIcon}
               eventHandlers={{
                 click: () => onSpotSelect(spot)
               }}
