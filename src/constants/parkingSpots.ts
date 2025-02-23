@@ -1,6 +1,7 @@
 import { ParkingSpot } from "../types/map";
+import { ADDITIONAL_PARKING_SPOTS } from "../utils/generateParkingSpots";
 
-export const MOCK_PARKING_SPOTS: ParkingSpot[] = [
+const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
   // Centro
   {
     position: { lat: -19.917299, lng: -43.934559 },
@@ -113,4 +114,9 @@ export const MOCK_PARKING_SPOTS: ParkingSpot[] = [
     address: "Praça da Liberdade, Belo Horizonte - MG",
     available: false
   }
+];
+
+export const MOCK_PARKING_SPOTS: ParkingSpot[] = [
+  ...INITIAL_PARKING_SPOTS,
+  ...ADDITIONAL_PARKING_SPOTS
 ];
