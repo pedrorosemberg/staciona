@@ -53,6 +53,7 @@ const calculateInsuranceCost = (hours: number): number => {
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
   const [showReservationDetails, setShowReservationDetails] = useState(false);
+  const [selectedRating, setSelectedRating] = useState(0);
   const [orderNumber] = useState(`STN${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
   const { reservationInfo, setSpot, setDate, setTime, setInsurance, setEndDate, setEndTime } = useReservation();
 
@@ -68,9 +69,36 @@ const Index = () => {
     setActiveTab(tab);
   };
 
+  const validateDateTime = (date: Date, time: string, endDate: Date, endTime: string): boolean => {
+    const start = new Date(date);
+    const [startHours, startMinutes] = time.split(':');
+    start.setHours(parseInt(startHours), parseInt(startMinutes));
+
+    const end = new Date(endDate);
+    const [endHours, endMinutes] = endTime.split(':');
+    end.setHours(parseInt(endHours), parseInt(endMinutes));
+
+    if (end.getTime() <= start.getTime()) {
+      toast.error("O horário de check-out deve ser posterior ao horário de check-in!");
+      return false;
+    }
+
+    const diffInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+    if (diffInHours <= 0) {
+      toast.error("O período de estacionamento deve ser maior que zero horas!");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleReservation = () => {
-    if (!reservationInfo.date || !reservationInfo.time) {
-      toast.error("Por favor, preencha todos os campos!");
+    if (!reservationInfo.date || !reservationInfo.time || !reservationInfo.endDate || !reservationInfo.endTime) {
+      toast.error("Por favor, preencha todos os campos de data e hora!");
+      return;
+    }
+
+    if (!validateDateTime(reservationInfo.date, reservationInfo.time, reservationInfo.endDate, reservationInfo.endTime)) {
       return;
     }
 
@@ -78,13 +106,19 @@ const Index = () => {
     
     setTimeout(() => {
       setActiveTab("avaliar");
-    }, 15000);
+    }, 2000); // Reduzido de 15000 para 2000 ms
   };
 
-  const handleRatingSubmit = (rating: number) => {
-    if (rating > 0) {
-      toast.success("Agradecemos sua avaliação! Por este gesto, você recebeu um cupom de 30%OFF para você e um amigo! Use AVALIA30 ao realizar o pagamento.");
+  const handleRatingChange = (rating: number) => {
+    setSelectedRating(rating);
+  };
+
+  const handleRatingSubmit = () => {
+    if (selectedRating > 0) {
       setShowReservationDetails(true);
+      toast.success("Agradecemos sua avaliação! Por este gesto, você recebeu um cupom de 30%OFF para você e um amigo! Use AVALIA30 ao realizar o pagamento.");
+    } else {
+      toast.error("Por favor, selecione uma avaliação antes de enviar!");
     }
   };
 
@@ -386,13 +420,13 @@ const Index = () => {
                     {!showReservationDetails ? (
                       <div className="text-center">
                         <h4 className="font-semibold mb-4">Como foi sua experiência?</h4>
-                        <StarRating onRatingChange={handleRatingSubmit} />
+                        <StarRating onRatingChange={handleRatingChange} />
                         <textarea
                           placeholder="Conte-nos mais sobre sua experiência (opcional)"
                           className="w-full p-4 border rounded-lg h-32 resize-none mt-4"
                         />
                         <button
-                          onClick={() => handleRatingSubmit(5)}
+                          onClick={handleRatingSubmit}
                           className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mt-4"
                         >
                           Enviar Avaliação
@@ -465,7 +499,7 @@ const Index = () => {
                           <ol className="space-y-4 list-decimal pl-4">
                             <li>Ir no estacionamento no endereço de check-in e informar o número do pedido.</li>
                             <li>Ao realizar o check-out, faça o pagamento diretamente ao estacionamento ou pelo StacionaApp, por cartão de crédito, débito ou pix.</li>
-                            <li>Use o cupom da avaliação na próxima vez que for estacionar, é só incluir no momento de pagar a reserva.</li>
+                            <li>Use o cupom da avaliação na próxima vez que for estacionar, é só incluir no momento de pagar a reserva. O uso de cupons são válidos apenas pelo aplicativo.</li>
                           </ol>
                         </div>
 
