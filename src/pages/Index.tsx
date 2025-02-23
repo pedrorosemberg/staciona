@@ -553,7 +553,6 @@ const Index = () => {
               <h4 className="text-white font-semibold mb-4">Contato</h4>
               <ul className="space-y-2">
                 <li>contato@staciona.com.br</li>
-                <li>+55 (11) 93473-8412</li>
               </ul>
             </div>
           </div>
