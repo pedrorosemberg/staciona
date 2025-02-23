@@ -42,10 +42,13 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   const [maxPrice, setMaxPrice] = useState<number>(100);
   const [minRating, setMinRating] = useState<number>(0);
 
-  // Centro de BH
-  const centerPosition: [number, number] = [-19.916681, -43.934493];
+  const defaultCenter: [number, number] = [-19.916681, -43.934493];
+  const defaultBounds: [[number, number], [number, number]] = [
+    [-20.1252, -44.2008], // Southwest corner
+    [-19.6683, -43.8054]  // Northeast corner
+  ];
 
-  // Filtragem das vagas
+  // Filtragem e ordenação das vagas
   const filteredSpots = spots.filter(spot => {
     const matchesSearch = spot.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          spot.address.toLowerCase().includes(searchTerm.toLowerCase());
@@ -122,17 +125,21 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
       {/* Mapa */}
       <div className="h-[400px] w-full rounded-lg overflow-hidden border">
         <MapContainer
-          bounds={[
-            [-20.1252, -44.2008], // Southwest corner
-            [-19.6683, -43.8054]  // Northeast corner
-          ]}
+          bounds={defaultBounds}
+          center={defaultCenter}
+          zoom={12}
+          scrollWheelZoom={false}
           style={{ height: '100%', width: '100%' }}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
           {sortedSpots.map((spot, index) => (
             <Marker
               key={index}
               position={[spot.position.lat, spot.position.lng]}
+              icon={customIcon}
               eventHandlers={{
                 click: () => onSpotSelect(spot)
               }}
