@@ -537,7 +537,7 @@ const Index = () => {
                 <img 
                   src="/lovable-uploads/fa976431-dd52-4d4f-8ac0-0dea6869605e.png"
                   alt="Staciona Logo"
-                  className="h-8 brightness-200"
+                  className="h-6 brightness-200"
                 />
               </div>
               <p className="text-sm">
