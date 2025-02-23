@@ -1,3 +1,4 @@
+
 import { ParkingSpot } from "../types/map";
 import { ADDITIONAL_PARKING_SPOTS } from "../utils/generateParkingSpots";
 
@@ -8,21 +9,27 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Estacionamento Centro",
     price: 15,
     address: "Rua Rio de Janeiro, 471 - Centro, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.5,
+    area: "Centro"
   },
   {
     position: { lat: -19.916123, lng: -43.936789 },
     title: "Parking Savassi",
     price: 20,
     address: "Rua Pernambuco, 1234 - Savassi, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.8,
+    area: "Savassi"
   },
   {
     position: { lat: -19.918456, lng: -43.933234 },
     title: "AutoPark Barro Preto",
     price: 12,
     address: "Rua Ouro Preto, 1376 - Barro Preto, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.0,
+    area: "Barro Preto"
   },
   // Região Hospitalar
   {
@@ -30,14 +37,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Hospital Life Park",
     price: 18,
     address: "Rua da Bahia, 1149 - Centro, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.2,
+    area: "Centro"
   },
   {
     position: { lat: -19.914890, lng: -43.933456 },
     title: "Medical Center Parking",
     price: 22,
     address: "Av. Álvares Cabral, 229 - Centro, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.6,
+    area: "Centro"
   },
   // Savassi
   {
@@ -45,14 +56,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Savassi Square Park",
     price: 25,
     address: "Praça da Savassi, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.9,
+    area: "Savassi"
   },
   {
     position: { lat: -19.934567, lng: -43.931789 },
     title: "Diamond Mall Park",
     price: 30,
     address: "Av. Olegário Maciel, 1600 - Lourdes, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.7,
+    area: "Lourdes"
   },
   // Lourdes
   {
@@ -60,14 +75,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Lourdes Premium",
     price: 28,
     address: "Rua da Bahia, 2020 - Lourdes, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.8,
+    area: "Lourdes"
   },
   {
     position: { lat: -19.931234, lng: -43.936789 },
     title: "Park Lourdes",
     price: 25,
     address: "Rua Gonçalves Dias, 2222 - Lourdes, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.5,
+    area: "Lourdes"
   },
   // Funcionários
   {
@@ -75,14 +94,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Funcionários Park",
     price: 22,
     address: "Rua dos Inconfidentes, 801 - Funcionários, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.4,
+    area: "Funcionários"
   },
   {
     position: { lat: -19.934567, lng: -43.938901 },
     title: "Office Park Premium",
     price: 24,
     address: "Av. Getúlio Vargas, 1492 - Funcionários, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.6,
+    area: "Funcionários"
   },
   // Santo Agostinho
   {
@@ -90,14 +113,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Santo Agostinho Park",
     price: 20,
     address: "Rua Aimorés, 2001 - Santo Agostinho, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.3,
+    area: "Santo Agostinho"
   },
   {
     position: { lat: -19.936789, lng: -43.940123 },
     title: "Business Center Park",
     price: 26,
     address: "Av. Barbacena, 472 - Santo Agostinho, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.7,
+    area: "Santo Agostinho"
   },
   // Região da Praça da Liberdade
   {
@@ -105,14 +132,18 @@ const INITIAL_PARKING_SPOTS: ParkingSpot[] = [
     title: "Liberdade Park",
     price: 18,
     address: "Rua Gonçalves Dias, 3100 - Santo Agostinho, Belo Horizonte - MG",
-    available: true
+    available: true,
+    rating: 4.2,
+    area: "Santo Agostinho"
   },
   {
     position: { lat: -19.938901, lng: -43.942345 },
     title: "Cultural Center Park",
     price: 15,
     address: "Praça da Liberdade, Belo Horizonte - MG",
-    available: false
+    available: false,
+    rating: 4.1,
+    area: "Funcionários"
   }
 ];
 

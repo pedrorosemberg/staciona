@@ -22,6 +22,7 @@ function generateRandomSpots(count: number, availablePercentage: number): Parkin
     const area = areas[Math.floor(Math.random() * areas.length)];
     const isAvailable = Math.random() < availablePercentage;
     const price = Math.floor(getRandomInRange(10, 35));
+    const rating = Number((getRandomInRange(3.5, 5.0)).toFixed(1));
     
     const spot: ParkingSpot = {
       position: {
@@ -31,7 +32,9 @@ function generateRandomSpots(count: number, availablePercentage: number): Parkin
       title: `Estacionamento ${area.name} #${i + 1}`,
       price,
       available: isAvailable,
-      address: `Endereço gerado automaticamente em ${area.name}`
+      address: `Endereço gerado automaticamente em ${area.name}`,
+      rating,
+      area: area.name
     };
     spots.push(spot);
   }
