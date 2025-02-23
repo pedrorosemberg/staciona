@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { Icon } from 'leaflet';
+import { Icon, LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
 
@@ -16,7 +16,7 @@ const customIcon = new Icon({
   iconAnchor: [12, 41]
 });
 
-function MapController({ center }: { center: [number, number] }) {
+function MapController({ center }: { center: LatLngTuple }) {
   const map = useMap();
   
   useEffect(() => {
@@ -27,7 +27,7 @@ function MapController({ center }: { center: [number, number] }) {
 }
 
 export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
-  const [currentPosition, setCurrentPosition] = useState<[number, number]>([-19.916681, -43.934493]);
+  const [currentPosition, setCurrentPosition] = useState<LatLngTuple>([-19.916681, -43.934493]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -44,8 +44,9 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
 
   return (
     <MapContainer
-      center={currentPosition}
+      center={[-19.916681, -43.934493]}
       zoom={13}
+      scrollWheelZoom={true}
       style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}
     >
       <MapController center={currentPosition} />
@@ -56,8 +57,7 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
       {spots.map((spot, index) => (
         <Marker
           key={index}
-          position={[spot.position.lat, spot.position.lng]}
-          icon={customIcon}
+          position={[spot.position.lat, spot.position.lng] as LatLngTuple}
           eventHandlers={{
             click: () => onSpotSelect(spot)
           }}
