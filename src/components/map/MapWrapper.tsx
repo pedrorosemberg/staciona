@@ -52,7 +52,7 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
         zoom={13}
         scrollWheelZoom={true}
         style={{ height: '100%', width: '100%' }}
-        whenReady={(map) => {
+        whenReady={() => {
           console.log('Map is ready');
         }}
       >
