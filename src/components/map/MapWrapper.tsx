@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngTuple } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
 
@@ -11,7 +12,7 @@ interface MapWrapperProps {
 }
 
 // Corrigindo o problema do ícone padrão do Leaflet
-const customIcon = new Icon({
+const customIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -46,24 +47,30 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
     }
   }, []);
 
+  // Define os limites da região metropolitana de BH
+  const bhBounds = L.latLngBounds(
+    L.latLng(-20.1252, -44.2008), // Southwest corner
+    L.latLng(-19.6683, -43.8054)  // Northeast corner
+  );
+
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden">
       <MapContainer
-        bounds={[
-          [-20.1252, -44.2008], // Southwest corner
-          [-19.6683, -43.8054]  // Northeast corner
-        ]}
+        bounds={bhBounds}
         style={{ height: '100%', width: '100%' }}
+        maxBounds={bhBounds}
+        maxBoundsViscosity={1.0}
       >
         <MapController center={currentPosition} />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          maxZoom={19}
+          minZoom={11}
         />
         {spots.map((spot, index) => (
           <Marker
             key={index}
-            position={[spot.position.lat, spot.position.lng] as LatLngTuple}
+            position={L.latLng(spot.position.lat, spot.position.lng)}
             icon={customIcon}
             eventHandlers={{
               click: () => onSpotSelect(spot)
