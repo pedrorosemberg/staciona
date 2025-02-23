@@ -68,8 +68,18 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   };
 
   const handleProceed = () => {
-    if (!selectedSpot) return;
-    document.getElementById('reservar-tab')?.click();
+    if (!selectedSpot?.available) {
+      toast.error('Por favor, selecione uma vaga disponível primeiro!');
+      return;
+    }
+    
+    // Encontra o elemento da aba "Reservar" e dispara um click nele
+    const reservarTab = document.querySelector('[role="tab"][aria-selected="false"]');
+    if (reservarTab instanceof HTMLElement) {
+      reservarTab.click();
+    } else {
+      toast.error('Não foi possível navegar para a aba de reserva. Por favor, tente novamente.');
+    }
   };
 
   return (
