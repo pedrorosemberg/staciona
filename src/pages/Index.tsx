@@ -52,6 +52,8 @@ const calculateInsuranceCost = (hours: number): number => {
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("buscar");
+  const [showReservationDetails, setShowReservationDetails] = useState(false);
+  const [orderNumber] = useState(`STN${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
   const { reservationInfo, setSpot, setDate, setTime, setInsurance, setEndDate, setEndTime } = useReservation();
 
   const handleTabChange = (tab: string) => {
@@ -82,6 +84,7 @@ const Index = () => {
   const handleRatingSubmit = (rating: number) => {
     if (rating > 0) {
       toast.success("Agradecemos sua avaliação! Por este gesto, você recebeu um cupom de 30%OFF para você e um amigo! Use AVALIA30 ao realizar o pagamento.");
+      setShowReservationDetails(true);
     }
   };
 
@@ -380,20 +383,95 @@ const Index = () => {
 
                 {activeTab === "avaliar" && (
                   <div className="space-y-6">
-                    <div className="text-center">
-                      <h4 className="font-semibold mb-4">Como foi sua experiência?</h4>
-                      <StarRating onRatingChange={handleRatingSubmit} />
-                    </div>
-                    <textarea
-                      placeholder="Conte-nos mais sobre sua experiência (opcional)"
-                      className="w-full p-4 border rounded-lg h-32 resize-none"
-                    />
-                    <button
-                      onClick={() => handleRatingSubmit(5)}
-                      className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                      Enviar Avaliação
-                    </button>
+                    {!showReservationDetails ? (
+                      <div className="text-center">
+                        <h4 className="font-semibold mb-4">Como foi sua experiência?</h4>
+                        <StarRating onRatingChange={handleRatingSubmit} />
+                        <textarea
+                          placeholder="Conte-nos mais sobre sua experiência (opcional)"
+                          className="w-full p-4 border rounded-lg h-32 resize-none mt-4"
+                        />
+                        <button
+                          onClick={() => handleRatingSubmit(5)}
+                          className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mt-4"
+                        >
+                          Enviar Avaliação
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-6">
+                        <div className="bg-blue-50 p-6 rounded-lg">
+                          <h3 className="text-xl font-semibold mb-4">Detalhes da Reserva</h3>
+                          
+                          <div className="space-y-4">
+                            <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                              <span className="font-medium">Número do Pedido:</span>
+                              <span className="font-mono">{orderNumber}</span>
+                            </div>
+
+                            <div className="bg-white p-4 rounded-lg space-y-2">
+                              <h4 className="font-semibold">{reservationInfo.spot?.title}</h4>
+                              <p className="text-gray-600">{reservationInfo.spot?.address}</p>
+                              <div className="flex items-center gap-1">
+                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                <span className="text-sm">{reservationInfo.spot?.rating.toFixed(1)}</span>
+                              </div>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <div className="bg-white p-4 rounded-lg">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Clock className="w-4 h-4 text-blue-600" />
+                                  <span className="font-medium">Check-in</span>
+                                </div>
+                                <p>{reservationInfo.date?.toLocaleDateString()} às {reservationInfo.time}</p>
+                              </div>
+                              <div className="bg-white p-4 rounded-lg">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Clock className="w-4 h-4 text-blue-600" />
+                                  <span className="font-medium">Check-out</span>
+                                </div>
+                                <p>{reservationInfo.endDate?.toLocaleDateString()} às {reservationInfo.endTime}</p>
+                              </div>
+                            </div>
+
+                            {(() => {
+                              const costs = calculateTotalCost();
+                              if (!costs) return null;
+                              return (
+                                <div className="space-y-2 bg-white p-4 rounded-lg">
+                                  <div className="flex justify-between">
+                                    <span>Tempo total:</span>
+                                    <span>{costs.hours} hora(s)</span>
+                                  </div>
+                                  {reservationInfo.includeInsurance && (
+                                    <div className="flex justify-between">
+                                      <span>Seguro (por hora):</span>
+                                      <span>R$ {calculateInsuranceCost(costs.hours).toFixed(2)}</span>
+                                    </div>
+                                  )}
+                                  <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                                    <span>Valor Total:</span>
+                                    <span>R$ {costs.total.toFixed(2)}</span>
+                                  </div>
+                                </div>
+                              );
+                            })()}
+                          </div>
+                        </div>
+
+                        <div className="bg-gray-50 p-6 rounded-lg">
+                          <h3 className="text-lg font-semibold mb-4">Instruções de Estacionamento</h3>
+                          <ol className="space-y-4 list-decimal pl-4">
+                            <li>Ir no estacionamento no endereço de check-in e informar o número do pedido.</li>
+                            <li>Ao realizar o check-out, faça o pagamento diretamente ao estacionamento ou pelo StacionaApp, por cartão de crédito, débito ou pix.</li>
+                            <li>Use o cupom da avaliação na próxima vez que for estacionar, é só incluir no momento de pagar a reserva.</li>
+                          </ol>
+                        </div>
+
+                        <WhatsAppButton />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
