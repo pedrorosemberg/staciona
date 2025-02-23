@@ -1,10 +1,11 @@
 
-import { MapContainer, TileLayer, Marker, Popup, MapContainerProps } from 'react-leaflet';
-import type { LatLngExpression, Icon as LeafletIcon } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import type { LatLngExpression, Icon } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
 import { Star } from 'lucide-react';
+import { useEffect } from 'react';
 
 interface ParkingMapProps {
   spots: ParkingSpot[];
@@ -12,8 +13,19 @@ interface ParkingMapProps {
   onSpotSelect: (spot: ParkingSpot) => void;
 }
 
-// Definindo os ícones dos marcadores corretamente
-const normalIcon: LeafletIcon = new L.Icon({
+// Componente para definir a posição inicial do mapa
+function SetViewOnLoad({ coords }: { coords: LatLngExpression }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    map.setView(coords, 13);
+  }, [map, coords]);
+
+  return null;
+}
+
+// Definindo os ícones dos marcadores no formato correto do Leaflet
+const normalIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -22,7 +34,7 @@ const normalIcon: LeafletIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-const selectedIcon: LeafletIcon = new L.Icon({
+const selectedIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -34,19 +46,15 @@ const selectedIcon: LeafletIcon = new L.Icon({
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
 
-  // Configuração do MapContainer com as props corretas
-  const mapProps: MapContainerProps = {
-    center: defaultPosition,
-    zoom: 13,
-    style: { height: '100%', width: '100%' }
-  };
-
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
-      <MapContainer {...mapProps}>
-        <TileLayer 
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <MapContainer 
+        style={{ height: '100%', width: '100%' }} 
+        zoom={13}
+      >
+        <SetViewOnLoad coords={defaultPosition} />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
           const markerIcon = selectedSpot?.title === spot.title ? selectedIcon : normalIcon;
