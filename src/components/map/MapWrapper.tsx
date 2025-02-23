@@ -1,19 +1,32 @@
 
 import { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
-import { Star } from 'lucide-react';
+import { Star, AlertCircle } from 'lucide-react';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { useReservation } from '@/hooks/useReservation';
+import { toast } from 'sonner';
 
 interface MapWrapperProps {
   spots: ParkingSpot[];
   onSpotSelect: (spot: ParkingSpot) => void;
 }
 
-// Ícone personalizado para os marcadores
-const customIcon = new L.Icon({
+// Ícones personalizados para os marcadores
+const normalIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+  shadowSize: [41, 41]
+});
+
+const selectedIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -41,6 +54,9 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100);
   const [minRating, setMinRating] = useState<number>(0);
+  const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { reservationInfo, setSpot, setDate, setTime, setEndDate, setEndTime, setInsurance } = useReservation();
 
   // Filtragem e ordenação das vagas
   const filteredSpots = spots.filter(spot => {
@@ -53,8 +69,11 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
     return matchesSearch && matchesArea && matchesPrice && matchesRating;
   });
 
-  // Ordenação por área (áreas premium primeiro) e depois por avaliação
+  // Ordenação priorizando vagas disponíveis, depois por área premium e avaliação
   const sortedSpots = [...filteredSpots].sort((a, b) => {
+    if (a.available !== b.available) {
+      return b.available ? 1 : -1;
+    }
     const areaIndexA = PREMIUM_AREAS.indexOf(a.area);
     const areaIndexB = PREMIUM_AREAS.indexOf(b.area);
     
@@ -63,6 +82,20 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
     }
     return areaIndexA - areaIndexB;
   });
+
+  const handleSpotSelect = (spot: ParkingSpot) => {
+    if (!spot.available) {
+      toast.error('Esta vaga não está disponível no momento.');
+      return;
+    }
+    setSelectedSpot(spot);
+    onSpotSelect(spot);
+  };
+
+  const handleProceed = () => {
+    if (!selectedSpot) return;
+    document.getElementById('reservar-tab')?.click();
+  };
 
   return (
     <div className="space-y-4">
@@ -119,24 +152,21 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
       {/* Mapa */}
       <div className="h-[400px] w-full rounded-lg overflow-hidden border">
         <MapContainer
-          bounds={[
-            [-20.1252, -44.2008], // Southwest corner
-            [-19.6683, -43.8054]  // Northeast corner
-          ]}
-          zoom={12}
+          center={[-19.916681, -43.934493]}
+          zoom={13}
           scrollWheelZoom={false}
           style={{ height: '100%', width: '100%' }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {sortedSpots.map((spot, index) => (
             <Marker
               key={index}
               position={[spot.position.lat, spot.position.lng]}
+              icon={selectedSpot?.title === spot.title ? selectedIcon : normalIcon}
               eventHandlers={{
-                click: () => onSpotSelect(spot)
+                click: () => handleSpotSelect(spot)
               }}
             >
               <Popup>
@@ -180,9 +210,9 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
             <div
               key={index}
               className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-                !spot.available ? 'opacity-60' : ''
-              }`}
-              onClick={() => onSpotSelect(spot)}
+                selectedSpot?.title === spot.title ? 'bg-blue-50' : ''
+              } ${!spot.available ? 'opacity-60' : ''}`}
+              onClick={() => handleSpotSelect(spot)}
             >
               <div className="flex justify-between items-start">
                 <div>
@@ -214,6 +244,19 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
           ))}
         </div>
       </div>
+
+      {/* Botão de prosseguir */}
+      <button
+        onClick={handleProceed}
+        disabled={!selectedSpot?.available}
+        className={`w-full py-3 rounded-lg transition-colors ${
+          selectedSpot?.available
+            ? 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        }`}
+      >
+        Prosseguir para Reserva
+      </button>
     </div>
   );
 }

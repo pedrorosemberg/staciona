@@ -7,6 +7,8 @@ interface ReservationStore {
   setSpot: (spot: ParkingSpot) => void;
   setDate: (date: Date) => void;
   setTime: (time: string) => void;
+  setEndDate: (date: Date) => void;
+  setEndTime: (time: string) => void;
   setInsurance: (include: boolean) => void;
   reset: () => void;
 }
@@ -16,6 +18,8 @@ export const useReservation = create<ReservationStore>((set) => ({
     spot: null,
     date: null,
     time: null,
+    endDate: null,
+    endTime: null,
     includeInsurance: false
   },
   setSpot: (spot) => set((state) => ({ 
@@ -27,6 +31,12 @@ export const useReservation = create<ReservationStore>((set) => ({
   setTime: (time) => set((state) => ({ 
     reservationInfo: { ...state.reservationInfo, time } 
   })),
+  setEndDate: (endDate) => set((state) => ({ 
+    reservationInfo: { ...state.reservationInfo, endDate } 
+  })),
+  setEndTime: (endTime) => set((state) => ({ 
+    reservationInfo: { ...state.reservationInfo, endTime } 
+  })),
   setInsurance: (includeInsurance) => set((state) => ({ 
     reservationInfo: { ...state.reservationInfo, includeInsurance } 
   })),
@@ -35,6 +45,8 @@ export const useReservation = create<ReservationStore>((set) => ({
       spot: null,
       date: null,
       time: null,
+      endDate: null,
+      endTime: null,
       includeInsurance: false
     }
   })

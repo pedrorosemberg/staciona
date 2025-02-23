@@ -16,5 +16,7 @@ export interface ReservationInfo {
   spot: ParkingSpot | null;
   date: Date | null;
   time: string | null;
+  endDate: Date | null;
+  endTime: string | null;
   includeInsurance: boolean;
 }
