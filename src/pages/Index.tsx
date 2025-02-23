@@ -165,9 +165,9 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/fa976431-dd52-4d4f-8ac0-0dea6869605e.png" 
-              alt="Staciona Logo" 
-              className="h-8"
+              src="/lovable-uploads/aed84fe1-5b79-41b5-8714-839a33b2afd8.png"
+              alt="Staciona Logo"
+              className="h-8 brightness-200"
             />
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -533,7 +533,13 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <div className="text-xl font-bold text-white mb-4">Staciona</div>
+              <div className="mb-4">
+                <img 
+                  src="/lovable-uploads/aed84fe1-5b79-41b5-8714-839a33b2afd8.png"
+                  alt="Staciona Logo"
+                  className="h-8 brightness-200"
+                />
+              </div>
               <p className="text-sm">
                 Simplificando sua busca por estacionamento com tecnologia e inovação.
               </p>
