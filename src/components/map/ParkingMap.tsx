@@ -1,6 +1,6 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LatLngExpression, Icon } from 'leaflet';
+import { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
@@ -32,20 +32,18 @@ const selectedIcon = new L.Icon({
 });
 
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
-  // Definindo a posição inicial do mapa
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
 
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
-        className="h-full w-full"
-        center={defaultPosition as L.LatLngExpression}
+        center={defaultPosition}
         zoom={13}
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer 
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
@@ -54,7 +52,7 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
           return (
             <Marker
               key={index}
-              position={position as L.LatLngExpression}
+              position={position}
               icon={markerIcon}
               eventHandlers={{
                 click: () => onSpotSelect(spot)
