@@ -12,7 +12,7 @@ interface MapWrapperProps {
 }
 
 // Ícone personalizado para os marcadores
-const customIcon = L.icon({
+const customIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -41,12 +41,6 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100);
   const [minRating, setMinRating] = useState<number>(0);
-
-  const defaultCenter: [number, number] = [-19.916681, -43.934493];
-  const defaultBounds: [[number, number], [number, number]] = [
-    [-20.1252, -44.2008], // Southwest corner
-    [-19.6683, -43.8054]  // Northeast corner
-  ];
 
   // Filtragem e ordenação das vagas
   const filteredSpots = spots.filter(spot => {
@@ -125,21 +119,22 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
       {/* Mapa */}
       <div className="h-[400px] w-full rounded-lg overflow-hidden border">
         <MapContainer
-          bounds={defaultBounds}
-          center={defaultCenter}
+          bounds={[
+            [-20.1252, -44.2008], // Southwest corner
+            [-19.6683, -43.8054]  // Northeast corner
+          ]}
           zoom={12}
           scrollWheelZoom={false}
           style={{ height: '100%', width: '100%' }}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {sortedSpots.map((spot, index) => (
             <Marker
               key={index}
               position={[spot.position.lat, spot.position.lng]}
-              icon={customIcon}
               eventHandlers={{
                 click: () => onSpotSelect(spot)
               }}
