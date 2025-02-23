@@ -47,7 +47,7 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   return (
     <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
       <MapContainer
-        defaultCenter={defaultPosition}
+        center={defaultPosition}
         zoom={13}
         scrollWheelZoom={true}
         style={{ height: '100%', width: '100%' }}
@@ -61,7 +61,6 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
           <Marker
             key={index}
             position={[spot.position.lat, spot.position.lng] as LatLngTuple}
-            icon={customIcon}
             eventHandlers={{
               click: () => onSpotSelect(spot)
             }}
