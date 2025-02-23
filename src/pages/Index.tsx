@@ -163,7 +163,13 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold text-primary">Staciona</div>
+          <div className="flex items-center">
+            <img 
+              src="/lovable-uploads/fa976431-dd52-4d4f-8ac0-0dea6869605e.png" 
+              alt="Staciona Logo" 
+              className="h-8"
+            />
+          </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Recursos</a>
             <a href="#about" className="text-gray-600 hover:text-primary transition-colors">Sobre</a>
