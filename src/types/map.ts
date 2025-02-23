@@ -1,10 +1,15 @@
 
 export interface ParkingSpot {
-  position: google.maps.LatLngLiteral;
+  position: {
+    lat: number;
+    lng: number;
+  };
   title: string;
   price: number;
   available: boolean;
   address: string;
+  rating: number; // 0 a 5
+  area: string; // Região da cidade
 }
 
 export interface ReservationInfo {
