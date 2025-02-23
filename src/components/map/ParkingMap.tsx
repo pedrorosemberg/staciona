@@ -1,11 +1,10 @@
 
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import type { LatLngExpression, Icon } from 'leaflet';
+import type { LatLngExpression } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
 import { Star } from 'lucide-react';
-import { useEffect } from 'react';
 
 interface ParkingMapProps {
   spots: ParkingSpot[];
@@ -13,14 +12,10 @@ interface ParkingMapProps {
   onSpotSelect: (spot: ParkingSpot) => void;
 }
 
-// Componente para definir a posição inicial do mapa
-function SetViewOnLoad({ coords }: { coords: LatLngExpression }) {
+// Componente para definir a posição e zoom do mapa
+function ChangeView({ center, zoom }: { center: LatLngExpression; zoom: number }) {
   const map = useMap();
-  
-  useEffect(() => {
-    map.setView(coords, 13);
-  }, [map, coords]);
-
+  map.setView(center, zoom);
   return null;
 }
 
@@ -32,7 +27,7 @@ const normalIcon = L.icon({
   popupAnchor: [1, -34],
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
   shadowSize: [41, 41]
-});
+}) as L.Icon;
 
 const selectedIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -41,7 +36,7 @@ const selectedIcon = L.icon({
   popupAnchor: [1, -34],
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
   shadowSize: [41, 41]
-});
+}) as L.Icon;
 
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
@@ -49,10 +44,9 @@ export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProp
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
-        style={{ height: '100%', width: '100%' }} 
-        zoom={13}
+        style={{ height: '100%', width: '100%' }}
       >
-        <SetViewOnLoad coords={defaultPosition} />
+        <ChangeView center={defaultPosition} zoom={13} />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         
         {spots.map((spot, index) => {
