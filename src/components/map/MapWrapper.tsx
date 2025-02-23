@@ -48,7 +48,7 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
   return (
     <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
       <MapContainer
-        center={defaultPosition}
+        className="h-full w-full"
         zoom={13}
         scrollWheelZoom={true}
         style={{ height: '100%', width: '100%' }}
