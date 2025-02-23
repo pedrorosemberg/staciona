@@ -450,6 +450,9 @@ const Index = () => {
                                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                                 <span className="text-sm">{reservationInfo.spot?.rating.toFixed(1)}</span>
                               </div>
+                              <p className="text-blue-600 font-medium">
+                                Valor por hora: R$ {reservationInfo.spot?.price.toFixed(2)}
+                              </p>
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-4">
@@ -477,6 +480,10 @@ const Index = () => {
                                   <div className="flex justify-between">
                                     <span>Tempo total:</span>
                                     <span>{costs.hours} hora(s)</span>
+                                  </div>
+                                  <div className="flex justify-between text-sm text-gray-600">
+                                    <span>Valor da hora:</span>
+                                    <span>R$ {reservationInfo.spot?.price.toFixed(2)}</span>
                                   </div>
                                   {reservationInfo.includeInsurance && (
                                     <div className="flex justify-between">
