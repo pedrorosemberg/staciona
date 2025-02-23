@@ -5,6 +5,31 @@ function getRandomInRange(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
 
+const streetNames = [
+  "Rua Padre Pedro Pinto", "Av. Cristiano Machado", "Av. Presidente Antônio Carlos",
+  "Rua Padre Eustáquio", "Av. Pedro II", "Av. Nossa Senhora do Carmo",
+  "Rua Rio de Janeiro", "Av. Amazonas", "Av. do Contorno",
+  "Av. Raja Gabaglia", "Av. Silva Lobo", "Av. João César de Oliveira",
+  "Av. João Pinheiro", "Rua dos Carijós", "Av. Afonso Pena",
+  "Rua da Bahia", "Av. Brasil", "Rua dos Tupis"
+];
+
+const neighborhoods = [
+  "Venda Nova", "Pampulha", "Cidade Nova",
+  "Padre Eustáquio", "Carlos Prates", "Santo Agostinho",
+  "Centro", "Savassi", "Lourdes",
+  "Gutierrez", "Nova Suíssa", "Eldorado",
+  "Funcionários", "Barro Preto", "Santa Efigênia",
+  "Santa Tereza", "Santa Amélia", "Caiçara"
+];
+
+function generateRandomAddress(area: string): string {
+  const street = streetNames[Math.floor(Math.random() * streetNames.length)];
+  const number = Math.floor(Math.random() * 2000) + 1;
+  const neighborhood = neighborhoods[Math.floor(Math.random() * neighborhoods.length)];
+  return `${street}, ${number} - ${neighborhood}, ${area} - MG`;
+}
+
 function generateRandomSpots(count: number, availablePercentage: number): ParkingSpot[] {
   const spots: ParkingSpot[] = [];
   const areas = [
@@ -32,7 +57,7 @@ function generateRandomSpots(count: number, availablePercentage: number): Parkin
       title: `Estacionamento ${area.name} #${i + 1}`,
       price,
       available: isAvailable,
-      address: `Endereço gerado automaticamente em ${area.name}`,
+      address: generateRandomAddress(area.name),
       rating,
       area: area.name
     };

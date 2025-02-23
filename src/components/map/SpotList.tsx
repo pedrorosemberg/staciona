@@ -21,10 +21,10 @@ export function SpotList({ spots, selectedSpot, onSpotSelect }: SpotListProps) {
         {spots.map((spot, index) => (
           <div
             key={index}
-            className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-              selectedSpot?.title === spot.title ? 'bg-blue-50' : ''
-            } ${!spot.available ? 'opacity-60' : ''}`}
             onClick={() => onSpotSelect(spot)}
+            className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
+              selectedSpot?.title === spot.title ? 'bg-blue-50 border-l-4 border-blue-500' : ''
+            } ${!spot.available ? 'opacity-60' : ''}`}
           >
             <div className="flex justify-between items-start">
               <div>

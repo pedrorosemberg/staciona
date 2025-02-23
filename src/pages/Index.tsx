@@ -244,6 +244,7 @@ const Index = () => {
                                     type="time"
                                     className="w-full p-2 border rounded"
                                     onChange={(e) => setTime(e.target.value)}
+                                    step="300"
                                   />
                                 </div>
                               </div>
@@ -264,6 +265,7 @@ const Index = () => {
                                     type="time"
                                     className="w-full p-2 border rounded"
                                     onChange={(e) => setEndTime(e.target.value)}
+                                    step="300"
                                   />
                                 </div>
                               </div>
