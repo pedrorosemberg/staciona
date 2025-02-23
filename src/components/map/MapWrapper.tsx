@@ -42,37 +42,42 @@ export function MapWrapper({ spots, onSpotSelect }: MapWrapperProps) {
     }
   }, []);
 
+  const defaultPosition: LatLngTuple = [-19.916681, -43.934493];
+
   return (
-    <MapContainer
-      center={[-19.916681, -43.934493]}
-      zoom={13}
-      scrollWheelZoom={true}
-      style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}
-    >
-      <MapController center={currentPosition} />
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {spots.map((spot, index) => (
-        <Marker
-          key={index}
-          position={[spot.position.lat, spot.position.lng] as LatLngTuple}
-          eventHandlers={{
-            click: () => onSpotSelect(spot)
-          }}
-        >
-          <Popup>
-            <div className="p-2">
-              <h3 className="font-semibold">{spot.title}</h3>
-              <p>Preço: R$ {spot.price},00/h</p>
-              <p className={`text-sm ${spot.available ? 'text-green-600' : 'text-red-600'}`}>
-                {spot.available ? 'Disponível' : 'Ocupado'}
-              </p>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
+      <MapContainer
+        defaultCenter={defaultPosition}
+        zoom={13}
+        scrollWheelZoom={true}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <MapController center={currentPosition} />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {spots.map((spot, index) => (
+          <Marker
+            key={index}
+            position={[spot.position.lat, spot.position.lng] as LatLngTuple}
+            icon={customIcon}
+            eventHandlers={{
+              click: () => onSpotSelect(spot)
+            }}
+          >
+            <Popup>
+              <div className="p-2">
+                <h3 className="font-semibold">{spot.title}</h3>
+                <p>Preço: R$ {spot.price},00/h</p>
+                <p className={`text-sm ${spot.available ? 'text-green-600' : 'text-red-600'}`}>
+                  {spot.available ? 'Disponível' : 'Ocupado'}
+                </p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 }
