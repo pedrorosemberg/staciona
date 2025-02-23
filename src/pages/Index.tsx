@@ -540,7 +540,7 @@ const Index = () => {
                 />
               </div>
               <p className="text-sm">
-                Simplificando sua busca por estacionamento com tecnologia e inovação.
+                Simplificando a mobilidade urbana.
               </p>
             </div>
             <div>
