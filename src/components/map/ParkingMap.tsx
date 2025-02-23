@@ -1,6 +1,6 @@
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { LatLngExpression, Icon, Map as LeafletMap } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { LatLngExpression, Icon } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ParkingSpot } from '@/types/map';
@@ -12,6 +12,7 @@ interface ParkingMapProps {
   onSpotSelect: (spot: ParkingSpot) => void;
 }
 
+// Definindo os ícones dos marcadores corretamente
 const normalIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconSize: [25, 41],
@@ -30,31 +31,31 @@ const selectedIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-// Componente para inicializar o mapa com as configurações iniciais
-function MapInitializer({ center, zoom }: { center: LatLngExpression; zoom: number }) {
-  const map = useMap();
-  map.setView(center, zoom);
-  return null;
-}
-
 export function ParkingMap({ spots, selectedSpot, onSpotSelect }: ParkingMapProps) {
+  // Definindo a posição inicial do mapa
   const defaultPosition: LatLngExpression = [-19.916681, -43.934493];
 
   return (
     <div className="h-[400px] w-full rounded-lg overflow-hidden border">
       <MapContainer 
         className="h-full w-full"
-        center={defaultPosition}
+        center={defaultPosition as L.LatLngExpression}
         zoom={13}
+        style={{ height: '100%', width: '100%' }}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer 
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
         {spots.map((spot, index) => {
           const position: LatLngExpression = [spot.position.lat, spot.position.lng];
           const markerIcon = selectedSpot?.title === spot.title ? selectedIcon : normalIcon;
+
           return (
             <Marker
               key={index}
-              position={position}
+              position={position as L.LatLngExpression}
+              icon={markerIcon}
               eventHandlers={{
                 click: () => onSpotSelect(spot)
               }}
