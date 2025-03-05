@@ -261,4 +261,4 @@ npm run format
 ## Licença
 
 Projeto NÃO licenciado. 
-© 2025 [METADAX TECNOLOGIA LTDA](https://app.metadax.com.br). Todos os direitos reservados.
+© 2025 [STACIONA](staciona.vercel.app). Todos os direitos reservados.
